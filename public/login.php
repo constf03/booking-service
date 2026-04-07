@@ -15,11 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $is_valid = false;
     }
 
-    if (!password_verify($_POST["password"], $user["password_hash"])) {
+    if ($user && !password_verify($_POST["password"], $user["password_hash"])) {
         $is_valid = false;
     }
 
     if ($is_valid) {
+        ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);  // 7 day cookie lifetime
+
         session_start();
         session_regenerate_id();
 
@@ -39,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.orange.min.css"
     />
     <title>Login - Booking Service</title>
   </head>

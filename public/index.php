@@ -21,14 +21,37 @@ if (isset($_SESSION["user_id"])) {
     <title>Home - Booking Service</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.orange.min.css"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header id="header" class="header">
       <div class="container">
-        <h1>Booking Service</h1>
+        <h3><strong>Booking Service</strong></h3>
+        <nav id="header-nav">
+          <ul>
+            <?php if(isset($user)): ?>
+              <li><a href="#" class="header-nav-item">My Bookings</a></li>
+              <li>
+                <a href="#" class="header-nav-item" id="nav-user-name">
+                  <?= htmlspecialchars($user["name"]) ?>
+                </a>
+              </li>
+              <li><a href="../src/logout.php" class="header-nav-item">Logout</a></li>
+              <details class="dropdown" id="header-nav-mobile-menu">
+                <summary>
+                  Menu
+                </summary>
+                <ul dir="rtl">
+                  <li><a href="#">My Bookings</a></li>
+                  <li><a href="#">Settings</a></li>
+                  <li><a href="#">Logout</a></li>
+                </ul>
+              </details>
+            <?php endif; ?>
+          </ul>
+        </nav>
       </div>
     </header>
 
@@ -36,10 +59,9 @@ if (isset($_SESSION["user_id"])) {
       <section>
         <?php if(isset($user)): ?>
 
-          <h1>Welcome</h1>
-          <p>Hello <?= htmlspecialchars($user["name"]) ?></p>
+          <h1>Welcome back!</h1>
 
-          <a href="../src/logout.php">Log out</a>
+          <div></div>
 
         <?php else: ?>
 
@@ -51,10 +73,30 @@ if (isset($_SESSION["user_id"])) {
       </section>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer id="footer" class="page-footer">
       <div class="container">
-        <p>&copy; 2025 Stefano Confalone</p>
+        <small><strong>Booking Service - a Simple PHP Learning Project (2026)</strong></small>
+        <br>
+        <small><i>by Stefano Confalone</i></small>
       </div>
     </footer>
+    
+    <script>
+      <?php if(isset($user)): ?>
+        
+        // truncate user name on nav to avoid overlapping
+        const truncateString = (str, num) => {
+          if (str.length <= num) {
+            return str;
+          } else {
+            return str.slice(0, num) + "...";
+          }
+        }
+
+        const truncated = truncateString(<?= json_encode($user["name"]) ?>, 8);
+        document.querySelector("#nav-user-name").innerHTML = truncated;
+
+      <?php endif; ?>
+    </script>
   </body>
 </html>

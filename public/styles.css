@@ -1,14 +1,52 @@
+:root {
+  --pico-orange: #d24317;
+}
+
 #main {
   min-height: 100vh;
 }
 
 #header {
+  display: flex;
+  justify-content: center;
+  padding: 0px;
   background-color: lightgray;
+  height: 64px;
+}
+
+#header .container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#header h1,
+#header h2,
+#header h3 {
+  color: var(--pico-orange);
+  padding: 0px;
+  margin: 0px;
+}
+
+.header-nav-item {
+  display: none;
+}
+
+@media screen and (min-width: 760px) {
+  .header-nav-item {
+    display: block;
+  }
+
+  #header-nav-mobile-menu {
+    display: none;
+  }
 }
 
 #footer {
-  background-color: black;
+  background-color: var(--pico-orange);
   color: white;
+  padding-bottom: 200px;
 }
 
 #footer p {
