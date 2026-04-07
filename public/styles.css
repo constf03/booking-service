@@ -1,0 +1,16 @@
+#main {
+  min-height: 100vh;
+}
+
+#header {
+  background-color: lightgray;
+}
+
+#footer {
+  background-color: black;
+  color: white;
+}
+
+#footer p {
+  color: white;
+}
