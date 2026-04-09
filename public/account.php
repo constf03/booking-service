@@ -8,17 +8,20 @@ if (isset($_SESSION["user_id"])) {
               WHERE id = {$_SESSION["user_id"]}";
     $result = $mysqli->query($query);
     $user = $result->fetch_assoc();
+} else {
+    header("Location: index.php");
 }
 
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home - Booking Service</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($user["name"]) ?>
+  </title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.orange.min.css" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -78,27 +81,7 @@ if (isset($_SESSION["user_id"])) {
     </div>
   </header>
 
-  <main id="main" class="container">
-    <section>
-      <?php if (isset($user)): ?>
-
-      <h1>Welcome back!</h1>
-
-      <section>
-        <h3>Book a Time Here</h3>
-      </section>
-
-      <?php else: ?>
-
-      <h2>Login Required</h2>
-
-      <p>You must be logged in to use this service.</p>
-
-      <p>Please <a href="./login.php">login</a> or <a href="./register.html">register.</a></p>
-
-      <?php endif; ?>
-    </section>
-  </main>
+  <main id="main" class="container"></main>
 
   <footer id="footer" class="page-footer">
     <div class="container">
@@ -125,8 +108,8 @@ if (isset($_SESSION["user_id"])) {
     let userNameLinks = document.getElementsByClassName("nav-user-name");
     for (let i = 0; i < userNameLinks.length; i++) {
       userNameLinks[i].innerHTML =
-      truncateString( <?= json_encode($user["name"]) ?> ,
-        8);
+        truncateString( <?= json_encode($user["name"]) ?> ,
+          8);
     }
 
     <?php endif; ?>

@@ -4,9 +4,11 @@ $is_valid = true;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $mysqli = require __DIR__ . "/../src/db.php";
-    $query = sprintf("SELECT * FROM users
-                      WHERE email = '%s'",
-                      $mysqli->real_escape_string($_POST["email"]));
+    $query = sprintf(
+        "SELECT * FROM users
+      WHERE email = '%s'",
+        $mysqli->real_escape_string($_POST["email"])
+    );
 
     $result = $mysqli->query($query);
     $user = $result->fetch_assoc();
@@ -36,49 +38,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.orange.min.css"
-    />
-    <title>Login - Booking Service</title>
-  </head>
-  <body>
-    <header></header>
 
-    <main class="container">
-      <section>
-        <h1>Login</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.orange.min.css" />
+  <title>Login - Booking Service</title>
+</head>
 
-        <form method="post">
-          <div>
-            <label for="email">Email</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                value="<?= htmlspecialchars($_POST["email"] ?? "") ?>"
-            />
-          </div>
+<body>
+  <header></header>
 
-          <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" />
-          </div>
+  <main class="container">
+    <section>
+      <h1>Login</h1>
 
-          <button>Login</button>
+      <form method="post">
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email"
+            value="<?= htmlspecialchars($_POST["email"] ?? "") ?>" />
+        </div>
 
-          <br />
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" />
+        </div>
 
-          <?php if (!$is_valid): ?>
-            <em>Invalid login.</em>
-          <?php endif; ?>
-        </form>
-      </section>
-    </main>
+        <button>Login</button>
 
-    <footer></footer>
-  </body>
+        <br />
+
+        <?php if (!$is_valid): ?>
+        <em>Invalid login.</em>
+        <?php endif; ?>
+      </form>
+    </section>
+  </main>
+
+  <footer></footer>
+</body>
+
 </html>

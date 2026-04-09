@@ -2,9 +2,11 @@
 
 $mysqli = require __DIR__ . "/db.php";
 
-$query = sprintf("SELECT * FROM users
-                  WHERE email = '%s'",
-                  $mysqli->real_escape_string($_GET["email"]));
+$query = sprintf(
+    "SELECT * FROM users
+    WHERE email = '%s'",
+    $mysqli->real_escape_string($_GET["email"])
+);
 
 $result = $mysqli->query($query);
 

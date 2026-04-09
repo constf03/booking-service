@@ -71,4 +71,3 @@ if ($stmt->execute()) {
 } else {
     die("SQL Error: $mysqli->error $mysqli->errno");
 }
-
