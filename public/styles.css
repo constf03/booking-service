@@ -2,6 +2,10 @@
   --pico-orange: #d24317;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 * {
   box-sizing: border-box;
   margin: 0px;
@@ -55,7 +59,14 @@
   padding-bottom: 200px;
 }
 
-#bookings-table {
+#bookings-table-wrapper {
+  overflow-x: auto;
+}
+
+@media screen and (min-width: 800px) {
+  #bookings-table-wrapper {
+    width: 100%;
+  }
 }
 
 .booking-slot:hover {
