@@ -125,11 +125,15 @@ function displayCurrentWeekFirstAndLastDate() {
   let first = curr.getDate() - curr.getDay() + 1;
   let last = first + 6;
 
-  let firstDay = new Date(curr.setDate(first)).toUTCString();
-  let lastDay = new Date(curr.setDate(last)).toUTCString();
+  let formattedFirstDate = new Date(curr.setDate(first))
+    .toUTCString()
+    .slice(0, -12);
+  let formattedLastDate = new Date(curr.setDate(last))
+    .toUTCString()
+    .slice(0, -12);
 
-  currWeekFirstDate.innerHTML = firstDay.toString();
-  currWeekLastDate.innerHTML = lastDay.toString();
+  currWeekFirstDate.innerHTML = formattedFirstDate.toString();
+  currWeekLastDate.innerHTML = formattedLastDate.toString();
 }
 
 if (currWeekFirstDate && currWeekLastDate) {
