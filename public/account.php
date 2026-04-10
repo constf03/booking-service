@@ -97,19 +97,19 @@ if (isset($_SESSION["user_id"])) {
     <?php if (isset($user)): ?>
 
     // truncate user name on nav to avoid overlapping
-    const truncateString = (str, num) => {
+    function truncateString(str, num) {
       if (str.length <= num) {
         return str;
       } else {
-        return str.slice(0, num) + "...";
+        const truncated = str.slice(0, num) + "...";
+        return truncated;
       }
     }
 
-    let userNameLinks = document.getElementsByClassName("nav-user-name");
+    const userNameLinks = document.getElementsByClassName("nav-user-name");
     for (let i = 0; i < userNameLinks.length; i++) {
-      userNameLinks[i].innerHTML =
-        truncateString( <?= json_encode($user["name"]) ?> ,
-          8);
+      const userName = <?= json_encode($user["name"]) ?> ;
+      userNameLinks[i].innerHTML = truncateString(userName, 8);
     }
 
     <?php endif; ?>

@@ -2,6 +2,12 @@
   --pico-orange: #d24317;
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
 #main {
   min-height: 100vh;
 }
@@ -49,6 +55,9 @@
   padding-bottom: 200px;
 }
 
-#footer p {
-  color: white;
+#bookings-table {
+}
+
+.booking-slot:hover {
+  cursor: pointer;
 }
