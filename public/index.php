@@ -94,8 +94,8 @@ if (isset($_SESSION["user_id"])) {
           <span id="week-last-date"></span>
         </div>
 
-        <div id="bookings-table-wrapper">
-          <table border="1" id="bookings-table">
+        <div id="wrapper-bookings-table">
+          <table id="bookings-table">
             <thead>
               <tr>
                 <th>Time / Day</th>
@@ -111,19 +111,19 @@ if (isset($_SESSION["user_id"])) {
             <tbody>
               <tr>
                 <td>8:00-9:00</td>
-                <td class="booking-slot" id="slot01"></td>
-                <td class="booking-slot" id="slot02"></td>
-                <td class="booking-slot" id="slot03"></td>
-                <td class="booking-slot" id="slot04"></td>
-                <td class="booking-slot" id="slot05"></td>
-                <td class="booking-slot" id="slot06"></td>
-                <td class="booking-slot" id="slot07"></td>
+                <td class="booking-slot" id="slot1"></td>
+                <td class="booking-slot" id="slot2"></td>
+                <td class="booking-slot" id="slot3"></td>
+                <td class="booking-slot" id="slot4"></td>
+                <td class="booking-slot" id="slot5"></td>
+                <td class="booking-slot" id="slot6"></td>
+                <td class="booking-slot" id="slot7"></td>
               </tr>
 
               <tr>
                 <td>9:00-10:00</td>
-                <td class="booking-slot" id="slot08"></td>
-                <td class="booking-slot" id="slot09"></td>
+                <td class="booking-slot" id="slot8"></td>
+                <td class="booking-slot" id="slot9"></td>
                 <td class="booking-slot" id="slot10"></td>
                 <td class="booking-slot" id="slot11"></td>
                 <td class="booking-slot" id="slot12"></td>
@@ -144,112 +144,112 @@ if (isset($_SESSION["user_id"])) {
 
               <tr>
                 <td>11:00-12:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot22"></td>
+                <td class="booking-slot" id="slot23"></td>
+                <td class="booking-slot" id="slot24"></td>
+                <td class="booking-slot" id="slot25"></td>
+                <td class="booking-slot" id="slot26"></td>
+                <td class="booking-slot" id="slot27"></td>
+                <td class="booking-slot" id="slot28"></td>
               </tr>
 
               <tr>
                 <td>12:00-13:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot29"></td>
+                <td class="booking-slot" id="slot30"></td>
+                <td class="booking-slot" id="slot31"></td>
+                <td class="booking-slot" id="slot32"></td>
+                <td class="booking-slot" id="slot33"></td>
+                <td class="booking-slot" id="slot34"></td>
+                <td class="booking-slot" id="slot35"></td>
               </tr>
 
               <tr>
                 <td>13:00-14:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot36"></td>
+                <td class="booking-slot" id="slot37"></td>
+                <td class="booking-slot" id="slot38"></td>
+                <td class="booking-slot" id="slot39"></td>
+                <td class="booking-slot" id="slot40"></td>
+                <td class="booking-slot" id="slot41"></td>
+                <td class="booking-slot" id="slot42"></td>
               </tr>
 
               <tr>
                 <td>14:00-15:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot43"></td>
+                <td class="booking-slot" id="slot44"></td>
+                <td class="booking-slot" id="slot45"></td>
+                <td class="booking-slot" id="slot46"></td>
+                <td class="booking-slot" id="slot47"></td>
+                <td class="booking-slot" id="slot48"></td>
+                <td class="booking-slot" id="slot49"></td>
               </tr>
 
               <tr>
                 <td>15:00-16:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot50"></td>
+                <td class="booking-slot" id="slot51"></td>
+                <td class="booking-slot" id="slot52"></td>
+                <td class="booking-slot" id="slot53"></td>
+                <td class="booking-slot" id="slot54"></td>
+                <td class="booking-slot" id="slot55"></td>
+                <td class="booking-slot" id="slot56"></td>
               </tr>
 
               <tr>
                 <td>16:00-17:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot57"></td>
+                <td class="booking-slot" id="slot58"></td>
+                <td class="booking-slot" id="slot59"></td>
+                <td class="booking-slot" id="slot60"></td>
+                <td class="booking-slot" id="slot61"></td>
+                <td class="booking-slot" id="slot62"></td>
+                <td class="booking-slot" id="slot63"></td>
               </tr>
 
               <tr>
                 <td>17:00-18:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot64"></td>
+                <td class="booking-slot" id="slot65"></td>
+                <td class="booking-slot" id="slot66"></td>
+                <td class="booking-slot" id="slot67"></td>
+                <td class="booking-slot" id="slot68"></td>
+                <td class="booking-slot" id="slot69"></td>
+                <td class="booking-slot" id="slot70"></td>
               </tr>
 
               <tr>
                 <td>18:00-19:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot71"></td>
+                <td class="booking-slot" id="slot72"></td>
+                <td class="booking-slot" id="slot73"></td>
+                <td class="booking-slot" id="slot74"></td>
+                <td class="booking-slot" id="slot75"></td>
+                <td class="booking-slot" id="slot76"></td>
+                <td class="booking-slot" id="slot77"></td>
               </tr>
 
               <tr>
                 <td>19:00-20:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot78"></td>
+                <td class="booking-slot" id="slot79"></td>
+                <td class="booking-slot" id="slot80"></td>
+                <td class="booking-slot" id="slot81"></td>
+                <td class="booking-slot" id="slot82"></td>
+                <td class="booking-slot" id="slot83"></td>
+                <td class="booking-slot" id="slot84"></td>
               </tr>
 
               <tr>
                 <td>20:00-21:00</td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
-                <td class="booking-slot"></td>
+                <td class="booking-slot" id="slot85"></td>
+                <td class="booking-slot" id="slot86"></td>
+                <td class="booking-slot" id="slot87"></td>
+                <td class="booking-slot" id="slot88"></td>
+                <td class="booking-slot" id="slot89"></td>
+                <td class="booking-slot" id="slot90"></td>
+                <td class="booking-slot" id="slot91"></td>
               </tr>
             </tbody>
           </table>
@@ -281,6 +281,11 @@ if (isset($_SESSION["user_id"])) {
 
   <script>
     <?php if (isset($user)): ?>
+
+    const
+      userId = <?=  json_encode($_SESSION["user_id"]) ?> ;
+
+    localStorage.setItem("userId", userId)
 
     // truncate user name on nav to avoid overlapping
     function truncateString(str, num) {

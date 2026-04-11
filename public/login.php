@@ -15,10 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (!$user) {
         $is_valid = false;
+        exit;
     }
 
     if ($user && !password_verify($_POST["password"], $user["password_hash"])) {
         $is_valid = false;
+        exit;
     }
 
     if ($is_valid) {

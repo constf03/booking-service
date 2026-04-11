@@ -89,6 +89,83 @@ async function loadBookingsData() {
   }
 }
 
+const bookingSlots = document.getElementsByClassName("booking-slot");
+let amtOfSlots;
+
+function displayBookingsTableData() {
+  for (let i = 0; i < bookingSlots.length; i++) {
+    bookingSlots[i].innerHTML = bookingSlots[i].id;
+  }
+}
+
+if (bookingsTable) {
+  displayBookingsTableData();
+}
+
+async function createBooking(userId, slotNumber, weekNumber, date, time) {
+  try {
+    const data = {
+      user_id: userId,
+      slot_number: slotNumber,
+      week_number: weekNumber,
+      date: date,
+      time: time,
+    };
+
+    const response = await fetch("../src/create-booking.php", {
+      method: "POST",
+      body: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+if (bookingSlots) {
+  const userId = parseInt(localStorage.getItem("userId"));
+  const weekNumber = getWeek();
+
+  let slotSelected;
+  let timeSelected;
+
+  for (let i = 0; i < bookingSlots.length; i++) {
+    bookingSlots[i].addEventListener("click", async () => {
+      const slot = document.querySelector(`#slot${i}`);
+      slotSelected = parseInt(slot.id.slice(0, 3));
+
+      if (slotSelected <= 7) {
+        timeSelected = "8:00-9:00";
+      } else if (slotSelected > 7 && slotSelected <= 14) {
+        timeSelected = "9:00-10:00";
+      } else if (slotSelected > 14 && slotSelected <= 21) {
+        timeSelected = "10:00-11:00";
+      } else if (slotSelected > 21 && slotSelected <= 28) {
+        timeSelected = "11:00-12:00";
+      } else if (slotSelected > 28 && slotSelected <= 35) {
+        timeSelected = "12:00-13:00";
+      } else if (slotSelected > 35 && slotSelected <= 42) {
+        timeSelected = "13:00-14:00";
+      } else if (slotSelected > 42 && slotSelected <= 49) {
+        timeSelected = "14:00-15:00";
+      } else if (slotSelected > 49 && slotSelected <= 56) {
+        timeSelected = "15:00-16:00";
+      } else if (slotSelected > 56 && slotSelected <= 63) {
+        timeSelected = "16:00-17:00";
+      } else if (slotSelected > 63 && slotSelected <= 70) {
+        timeSelected = "17:00-18:00";
+      } else if (slotSelected > 70 && slotSelected <= 77) {
+        timeSelected = "18:00-19:00";
+      } else if (slotSelected > 77 && slotSelected <= 84) {
+        timeSelected = "19:00-20:00";
+      } else {
+        timeSelected = "20:00-21:00";
+      }
+
+      await createBooking();
+    });
+  }
+}
+
 // Returns the ISO week of the date.
 // Source: https://weeknumber.com/how-to/javascript
 function getWeek() {
@@ -128,6 +205,7 @@ function displayCurrentWeekFirstAndLastDate() {
   let formattedFirstDate = new Date(curr.setDate(first))
     .toUTCString()
     .slice(0, -12);
+
   let formattedLastDate = new Date(curr.setDate(last))
     .toUTCString()
     .slice(0, -12);

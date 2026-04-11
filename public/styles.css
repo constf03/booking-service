@@ -59,16 +59,48 @@ body {
   padding-bottom: 200px;
 }
 
-#bookings-table-wrapper {
+#wrapper-bookings-table {
   overflow-x: auto;
 }
 
 @media screen and (min-width: 800px) {
-  #bookings-table-wrapper {
+  #wrapper-bookings-table {
     width: 100%;
   }
 }
 
+#bookings-table table {
+  table-layout: fixed;
+}
+
+#bookings-table th,
+#bookings-table td {
+  border: 1px solid gray;
+  max-width: 200px;
+  text-align: center;
+  height: 64px;
+}
+
+.booking-slot {
+  height: 64px;
+  background-color: lightgray;
+}
+
 .booking-slot:hover {
   cursor: pointer;
+  transition: 200ms;
+  background-color: yellow;
+}
+
+.booking-slot:active {
+  background-color: darkgoldenrod;
+  transition: 200ms;
+}
+
+.booking-slot-available {
+  background-color: lightgreen;
+}
+
+.booking-slot-unavailable {
+  background-color: lightcoral;
 }
