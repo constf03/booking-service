@@ -64,26 +64,26 @@ const bookingsTableInfoText = document.querySelector(
   "#bookings-table-info-text",
 );
 
-let bookingsData = [];
-
-async function loadBookingsData() {
+async function getBookingsData() {
   try {
     const response = await fetch("../src/get-bookings-data.php", {
       method: "GET",
       "Content-Type": "application/json",
     });
 
-    if (!response.ok) {
+    if (!response.status === 200) {
       bookingsTableInfoText.innerHTML = `
         <em style="color: red;">
           An error occurred while trying to display bookings data...
         </em>
       `;
-      throw new Error(response.statusText);
+
+      throw new Error(response.status);
     }
 
     const data = await response.json();
-    bookingsData = data;
+    console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -92,7 +92,17 @@ async function loadBookingsData() {
 const bookingSlots = document.getElementsByClassName("booking-slot");
 let amtOfSlots;
 
-function displayBookingsTableData() {
+async function displayBookingsTableData() {
+  const userId = parseInt(localStorage.getItem("userId"));
+  const weekNumber = getWeek();
+  const payload = await getBookingsData();
+
+  for (let i = 0; i < payload.length; i++) {
+    if (payload[i].user_id == userId && payload[i].week_number == weekNumber) {
+      bookingSlots[i].classList.add("booking-slot-user");
+    }
+  }
+
   for (let i = 0; i < bookingSlots.length; i++) {
     bookingSlots[i].innerHTML = bookingSlots[i].id;
   }
@@ -114,24 +124,27 @@ async function createBooking(userId, slotNumber, weekNumber, date, time) {
 
     const response = await fetch("../src/create-booking.php", {
       method: "POST",
+      "Content-Type": "application/json",
       body: data,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
   }
 }
 
 if (bookingSlots) {
   const userId = parseInt(localStorage.getItem("userId"));
   const weekNumber = getWeek();
-
   let slotSelected;
   let timeSelected;
 
   for (let i = 0; i < bookingSlots.length; i++) {
     bookingSlots[i].addEventListener("click", async () => {
-      const slot = document.querySelector(`#slot${i}`);
-      slotSelected = parseInt(slot.id.slice(0, 3));
+      if (bookingSlots[i].classList.contains("booking-available")) {
+        return;
+      }
+
+      slotSelected = bookingSlots[i].id.slice(4);
 
       if (slotSelected <= 7) {
         timeSelected = "8:00-9:00";
@@ -161,7 +174,8 @@ if (bookingSlots) {
         timeSelected = "20:00-21:00";
       }
 
-      await createBooking();
+      console.log(slotSelected);
+      // await createBooking(userId, slotSelected, weekNumber, "", timeSelected);
     });
   }
 }
@@ -198,20 +212,14 @@ const currWeekFirstDate = document.querySelector("#week-first-date");
 const currWeekLastDate = document.querySelector("#week-last-date");
 
 function displayCurrentWeekFirstAndLastDate() {
-  let curr = new Date();
-  let first = curr.getDate() - curr.getDay() + 1;
-  let last = first + 6;
+  const start = new Date();
+  start.setDate(start.getDate() - start.getDay() + 1);
 
-  let formattedFirstDate = new Date(curr.setDate(first))
-    .toUTCString()
-    .slice(0, -12);
+  const end = new Date(start);
+  end.setDate(end.getDate() + 6);
 
-  let formattedLastDate = new Date(curr.setDate(last))
-    .toUTCString()
-    .slice(0, -12);
-
-  currWeekFirstDate.innerHTML = formattedFirstDate.toString();
-  currWeekLastDate.innerHTML = formattedLastDate.toString();
+  currWeekFirstDate.innerHTML = start.toLocaleDateString();
+  currWeekLastDate.innerHTML = end.toLocaleDateString();
 }
 
 if (currWeekFirstDate && currWeekLastDate) {
