@@ -59,6 +59,17 @@ if (registerForm) {
 }
 
 // bookings data
+// prettier-ignore
+const bookingSlotIdsDB = {
+  monday:      [  1 , 8 , 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85  ],
+  tuesday:     [  2 , 9 , 16, 23, 30, 37, 44, 51, 58, 65, 72, 79, 86  ],
+  wednesday:   [  3 , 10, 17, 24, 31, 38, 45, 52, 59, 66, 73, 80, 87  ],
+  thursday:    [  4 , 11, 18, 25, 32, 39, 46, 53, 60, 67, 74, 81, 88  ],
+  friday:      [  5 , 12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89  ],
+  saturday:    [  6 , 13, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83, 90  ],
+  sunday:      [  7 , 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91  ]
+}
+
 const bookingsTable = document.querySelector("#bookings-table");
 const bookingsTableInfoText = document.querySelector(
   "#bookings-table-info-text",
@@ -132,13 +143,75 @@ async function createBooking(userId, slotNumber, weekNumber, date, time) {
   }
 }
 
+const days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
 if (bookingSlots) {
-  const userId = parseInt(localStorage.getItem("userId"));
-  const weekNumber = getWeek();
+  const ids = bookingSlotIdsDB;
+  let slotTimeDay;
+  let slotStartTime;
   let slotSelected;
   let timeSelected;
 
+  const today = days[new Date().getDay()];
+  const todayN = days.indexOf(today);
+
   for (let i = 0; i < bookingSlots.length; i++) {
+    if (i <= 7) {
+      slotStartTime = "08:00";
+    } else if (i > 7 && i <= 14) {
+      slotStartTime = "09:00";
+    } else if (i > 14 && i <= 21) {
+      slotStartTime = "10:00";
+    } else if (i > 21 && i <= 28) {
+      slotStartTime = "11:00";
+    } else if (i > 28 && i <= 35) {
+      slotStartTime = "12:00";
+    } else if (i > 35 && i <= 42) {
+      slotStartTime = "13:00";
+    } else if (i > 42 && i <= 49) {
+      slotStartTime = "14:00";
+    } else if (i > 49 && i <= 56) {
+      slotStartTime = "15:00";
+    } else if (i > 56 && i <= 63) {
+      slotStartTime = "16:00";
+    } else if (i > 63 && i <= 70) {
+      slotStartTime = "17:00";
+    } else if (i > 70 && i <= 77) {
+      slotStartTime = "18:00";
+    } else if (i > 77 && i <= 84) {
+      slotStartTime = "19:00";
+    } else {
+      slotStartTime = "20:00";
+    }
+
+    if (ids.monday.includes(i)) {
+      slotTimeDay = 1;
+    } else if (ids.tuesday.includes(i)) {
+      slotTimeDay = 2;
+    } else if (ids.wednesday.includes(i)) {
+      slotTimeDay = 3;
+    } else if (ids.thursday.includes(i)) {
+      slotTimeDay = 4;
+    } else if (ids.friday.includes(i)) {
+      slotTimeDay = 5;
+    } else if (ids.saturday.includes(i)) {
+      slotTimeDay = 6;
+    } else {
+      slotTimeDay = 7;
+    }
+
+    if (slotTimeDay < todayN) {
+      bookingSlots[i].classList.add("booking-slot-unavailable");
+    }
+
     bookingSlots[i].addEventListener("click", async () => {
       if (bookingSlots[i].classList.contains("booking-available")) {
         return;
@@ -147,9 +220,9 @@ if (bookingSlots) {
       slotSelected = bookingSlots[i].id.slice(4);
 
       if (slotSelected <= 7) {
-        timeSelected = "8:00-9:00";
+        timeSelected = "08:00-09:00";
       } else if (slotSelected > 7 && slotSelected <= 14) {
-        timeSelected = "9:00-10:00";
+        timeSelected = "09:00-10:00";
       } else if (slotSelected > 14 && slotSelected <= 21) {
         timeSelected = "10:00-11:00";
       } else if (slotSelected > 21 && slotSelected <= 28) {
@@ -174,7 +247,7 @@ if (bookingSlots) {
         timeSelected = "20:00-21:00";
       }
 
-      console.log(slotSelected);
+      console.log(`Selected: ${timeSelected}, day of the week: ${slotTimeDay}`);
       // await createBooking(userId, slotSelected, weekNumber, "", timeSelected);
     });
   }
@@ -213,10 +286,10 @@ const currWeekLastDate = document.querySelector("#week-last-date");
 
 function displayCurrentWeekFirstAndLastDate() {
   const start = new Date();
-  start.setDate(start.getDate() - start.getDay() + 1);
+  start.setDate(start.getDate() - start.getDay() - 1);
 
   const end = new Date(start);
-  end.setDate(end.getDate() + 6);
+  end.setDate(end.getDate() + 7);
 
   currWeekFirstDate.innerHTML = start.toLocaleDateString();
   currWeekLastDate.innerHTML = end.toLocaleDateString();
