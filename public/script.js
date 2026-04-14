@@ -59,17 +59,6 @@ if (registerForm) {
 }
 
 // bookings data
-// prettier-ignore
-const bookingSlotIdsDB = {
-  monday:      [  1 , 8 , 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85  ],
-  tuesday:     [  2 , 9 , 16, 23, 30, 37, 44, 51, 58, 65, 72, 79, 86  ],
-  wednesday:   [  3 , 10, 17, 24, 31, 38, 45, 52, 59, 66, 73, 80, 87  ],
-  thursday:    [  4 , 11, 18, 25, 32, 39, 46, 53, 60, 67, 74, 81, 88  ],
-  friday:      [  5 , 12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89  ],
-  saturday:    [  6 , 13, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83, 90  ],
-  sunday:      [  7 , 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91  ]
-}
-
 const bookingsTable = document.querySelector("#bookings-table");
 const bookingsTableInfoText = document.querySelector(
   "#bookings-table-info-text",
@@ -82,7 +71,7 @@ async function getBookingsData() {
       "Content-Type": "application/json",
     });
 
-    if (!response.status === 200) {
+    if (response.status !== 200) {
       bookingsTableInfoText.innerHTML = `
         <em style="color: red;">
           An error occurred while trying to display bookings data...
@@ -153,16 +142,30 @@ const days = [
   "Sunday",
 ];
 
+// prettier-ignore
+const bookingSlotIdsDB = {
+  monday:      [  1 , 8 , 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85  ],
+  tuesday:     [  2 , 9 , 16, 23, 30, 37, 44, 51, 58, 65, 72, 79, 86  ],
+  wednesday:   [  3 , 10, 17, 24, 31, 38, 45, 52, 59, 66, 73, 80, 87  ],
+  thursday:    [  4 , 11, 18, 25, 32, 39, 46, 53, 60, 67, 74, 81, 88  ],
+  friday:      [  5 , 12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89  ],
+  saturday:    [  6 , 13, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83, 90  ],
+  sunday:      [  7 , 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91  ]
+}
+
+const bookingDetailsForm = document.querySelector("#booking-details-form");
+const ids = bookingSlotIdsDB;
+var slotTimeDay;
+let slotStartTime;
+let slotSelected;
+let timeSelected;
+
+const today = days[new Date().getDay() - 1];
+const todayN = days.indexOf(today) + 1;
+const now = new Date();
+const currentTime = now.toString().slice(16, 21);
+
 if (bookingSlots) {
-  const ids = bookingSlotIdsDB;
-  let slotTimeDay;
-  let slotStartTime;
-  let slotSelected;
-  let timeSelected;
-
-  const today = days[new Date().getDay()];
-  const todayN = days.indexOf(today);
-
   for (let i = 0; i < bookingSlots.length; i++) {
     if (i <= 7) {
       slotStartTime = "08:00";
@@ -192,32 +195,59 @@ if (bookingSlots) {
       slotStartTime = "20:00";
     }
 
-    if (ids.monday.includes(i)) {
+    let id = parseInt(bookingSlots[i].id.slice(4));
+
+    if (ids.monday.includes(id)) {
       slotTimeDay = 1;
-    } else if (ids.tuesday.includes(i)) {
+    } else if (ids.tuesday.includes(id)) {
       slotTimeDay = 2;
-    } else if (ids.wednesday.includes(i)) {
+    } else if (ids.wednesday.includes(id)) {
       slotTimeDay = 3;
-    } else if (ids.thursday.includes(i)) {
+    } else if (ids.thursday.includes(id)) {
       slotTimeDay = 4;
-    } else if (ids.friday.includes(i)) {
+    } else if (ids.friday.includes(id)) {
       slotTimeDay = 5;
-    } else if (ids.saturday.includes(i)) {
+    } else if (ids.saturday.includes(id)) {
       slotTimeDay = 6;
     } else {
       slotTimeDay = 7;
     }
 
-    if (slotTimeDay < todayN) {
+    if (todayN > slotTimeDay) {
+      bookingSlots[i].classList.add("booking-slot-unavailable");
+    } else if (currentTime > slotStartTime && todayN >= slotTimeDay) {
       bookingSlots[i].classList.add("booking-slot-unavailable");
     }
 
+    if (
+      !bookingSlots[i].classList.contains("booking-slot-unavailable") &&
+      !bookingSlots[i].classList.contains("booking-slot-user")
+    ) {
+      bookingSlots[i].classList.add("booking-slot-available");
+    }
+
     bookingSlots[i].addEventListener("click", async () => {
-      if (bookingSlots[i].classList.contains("booking-available")) {
+      if (!bookingSlots[i].classList.contains("booking-slot-available")) {
         return;
       }
 
       slotSelected = bookingSlots[i].id.slice(4);
+
+      if (ids.monday.includes(id)) {
+        slotTimeDay = 1;
+      } else if (ids.tuesday.includes(id)) {
+        slotTimeDay = 2;
+      } else if (ids.wednesday.includes(id)) {
+        slotTimeDay = 3;
+      } else if (ids.thursday.includes(id)) {
+        slotTimeDay = 4;
+      } else if (ids.friday.includes(id)) {
+        slotTimeDay = 5;
+      } else if (ids.saturday.includes(id)) {
+        slotTimeDay = 6;
+      } else {
+        slotTimeDay = 7;
+      }
 
       if (slotSelected <= 7) {
         timeSelected = "08:00-09:00";
@@ -248,7 +278,8 @@ if (bookingSlots) {
       }
 
       console.log(`Selected: ${timeSelected}, day of the week: ${slotTimeDay}`);
-      // await createBooking(userId, slotSelected, weekNumber, "", timeSelected);
+      localStorage.setItem("booking_details_time", timeSelected);
+      bookingDetailsForm.scrollIntoView({ behavior: "smooth" });
     });
   }
 }
