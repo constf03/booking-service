@@ -155,7 +155,9 @@ const bookingSlotIdsDB = {
 
 const bookingDetailsForm = document.querySelector("#booking-details-form");
 const ids = bookingSlotIdsDB;
-var slotTimeDay;
+let slotTimeDate;
+let slotTimeDay;
+let slotTimeDayN;
 let slotStartTime;
 let slotSelected;
 let timeSelected;
@@ -198,24 +200,24 @@ if (bookingSlots) {
     let id = parseInt(bookingSlots[i].id.slice(4));
 
     if (ids.monday.includes(id)) {
-      slotTimeDay = 1;
+      slotTimeDayN = 1;
     } else if (ids.tuesday.includes(id)) {
-      slotTimeDay = 2;
+      slotTimeDayN = 2;
     } else if (ids.wednesday.includes(id)) {
-      slotTimeDay = 3;
+      slotTimeDayN = 3;
     } else if (ids.thursday.includes(id)) {
-      slotTimeDay = 4;
+      slotTimeDayN = 4;
     } else if (ids.friday.includes(id)) {
-      slotTimeDay = 5;
+      slotTimeDayN = 5;
     } else if (ids.saturday.includes(id)) {
-      slotTimeDay = 6;
+      slotTimeDayN = 6;
     } else {
-      slotTimeDay = 7;
+      slotTimeDayN = 7;
     }
 
-    if (todayN > slotTimeDay) {
+    if (todayN > slotTimeDayN) {
       bookingSlots[i].classList.add("booking-slot-unavailable");
-    } else if (currentTime > slotStartTime && todayN >= slotTimeDay) {
+    } else if (currentTime > slotStartTime && todayN >= slotTimeDayN) {
       bookingSlots[i].classList.add("booking-slot-unavailable");
     }
 
@@ -226,7 +228,7 @@ if (bookingSlots) {
       bookingSlots[i].classList.add("booking-slot-available");
     }
 
-    bookingSlots[i].addEventListener("click", async () => {
+    bookingSlots[i].addEventListener("click", () => {
       if (!bookingSlots[i].classList.contains("booking-slot-available")) {
         return;
       }
@@ -234,20 +236,43 @@ if (bookingSlots) {
       slotSelected = bookingSlots[i].id.slice(4);
 
       if (ids.monday.includes(id)) {
-        slotTimeDay = 1;
+        slotTimeDay = "Monday";
       } else if (ids.tuesday.includes(id)) {
-        slotTimeDay = 2;
+        slotTimeDay = "Tuesday";
       } else if (ids.wednesday.includes(id)) {
-        slotTimeDay = 3;
+        slotTimeDay = "Wednesday";
       } else if (ids.thursday.includes(id)) {
-        slotTimeDay = 4;
+        slotTimeDay = "Thursday";
       } else if (ids.friday.includes(id)) {
-        slotTimeDay = 5;
+        slotTimeDay = "Friday";
       } else if (ids.saturday.includes(id)) {
-        slotTimeDay = 6;
+        slotTimeDay = "Saturday";
       } else {
-        slotTimeDay = 7;
+        slotTimeDay = "Sunday";
       }
+
+      const start = new Date();
+      start.setDate(start.getDate() - start.getDay() + 1);
+
+      const targetDay = new Date(start);
+
+      if (slotTimeDay == "Monday") {
+        targetDay.setDate(targetDay.getDate());
+      } else if (slotTimeDay == "Tuesday") {
+        targetDay.setDate(targetDay.getDate() + 1);
+      } else if (slotTimeDay == "Wednesday") {
+        targetDay.setDate(targetDay.getDate() + 2);
+      } else if (slotTimeDay == "Thursday") {
+        targetDay.setDate(targetDay.getDate() + 3);
+      } else if (slotTimeDay == "Friday") {
+        targetDay.setDate(targetDay.getDate() + 4);
+      } else if (slotTimeDay == "Saturday") {
+        targetDay.setDate(targetDay.getDate() + 5);
+      } else {
+        targetDay.setDate(targetDay.getDate() + 6);
+      }
+
+      slotTimeDate = targetDay.toLocaleDateString();
 
       if (slotSelected <= 7) {
         timeSelected = "08:00-09:00";
@@ -277,11 +302,28 @@ if (bookingSlots) {
         timeSelected = "20:00-21:00";
       }
 
-      console.log(`Selected: ${timeSelected}, day of the week: ${slotTimeDay}`);
-      localStorage.setItem("booking_details_time", timeSelected);
+      setBookingDetails(`${slotTimeDay} ${slotTimeDate}`, timeSelected);
+
       bookingDetailsForm.scrollIntoView({ behavior: "smooth" });
     });
   }
+}
+
+function setBookingDetails(day, time) {
+  const bookingDetailsForm = document.querySelector("#booking-details-form");
+  const bookingDetailsDay = document.querySelector("#booking-details-day");
+  const bookingDetailsTime = document.querySelector("#booking-details-time");
+  const bookingDetailsFormBtn = document.querySelector(
+    "#booking-details-button",
+  );
+
+  bookingDetailsDay.value = day;
+  bookingDetailsTime.value = time;
+  bookingDetailsFormBtn.removeAttribute("disabled");
+
+  bookingDetailsForm.addEventListener("submit", async () => {
+    //await createBooking(userId, slotSelected, getWeek(), day, time);
+  });
 }
 
 // Returns the ISO week of the date.
@@ -317,10 +359,10 @@ const currWeekLastDate = document.querySelector("#week-last-date");
 
 function displayCurrentWeekFirstAndLastDate() {
   const start = new Date();
-  start.setDate(start.getDate() - start.getDay() - 1);
+  start.setDate(start.getDate() - start.getDay() + 1);
 
   const end = new Date(start);
-  end.setDate(end.getDate() + 7);
+  end.setDate(end.getDate() + 6);
 
   currWeekFirstDate.innerHTML = start.toLocaleDateString();
   currWeekLastDate.innerHTML = end.toLocaleDateString();
