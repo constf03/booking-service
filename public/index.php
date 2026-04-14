@@ -94,6 +94,7 @@ if (isset($_SESSION["user_id"])) {
           <span id="week-last-date"></span>
         </div>
 
+        <p id="bookings-table-info-text"></p>
         <div id="wrapper-bookings-table">
           <table id="bookings-table">
             <thead>
@@ -110,7 +111,7 @@ if (isset($_SESSION["user_id"])) {
             </thead>
             <tbody>
               <tr>
-                <td>8:00-9:00</td>
+                <td>08:00-09:00</td>
                 <td class="booking-slot" id="slot1"></td>
                 <td class="booking-slot" id="slot2"></td>
                 <td class="booking-slot" id="slot3"></td>
@@ -121,7 +122,7 @@ if (isset($_SESSION["user_id"])) {
               </tr>
 
               <tr>
-                <td>9:00-10:00</td>
+                <td>09:00-10:00</td>
                 <td class="booking-slot" id="slot8"></td>
                 <td class="booking-slot" id="slot9"></td>
                 <td class="booking-slot" id="slot10"></td>
@@ -254,7 +255,21 @@ if (isset($_SESSION["user_id"])) {
             </tbody>
           </table>
         </div>
-        <p id="bookings-table-info-text"></p>
+
+        <div id="booking-details">
+          <h3>Booking Details</h3>
+          <form id="booking-details-form" method="post">
+            <div>
+              <label>Day</label>
+              <input id="booking-details-day" disabled />
+            </div>
+            <div>
+              <label>Time</label>
+              <input id="booking-details-time" disabled />
+            </div>
+            <button id="booking-details-button" disabled>Book Selected</button>
+          </form>
+        </div>
       </section>
 
       <?php else: ?>
@@ -271,11 +286,15 @@ if (isset($_SESSION["user_id"])) {
 
   <footer id="footer" class="page-footer">
     <div class="container">
-      <small><strong>Booking Service - a Simple PHP Learning Project (2026)</strong></small>
+      <ul class="footer-left">
+        <li><strong>Booking Service - a Simple PHP Learning Project (2026)</strong></li>
+        <li><i>by Stefano Confalone</i></li>
+      </ul>
 
-      <br>
-
-      <small><i>by Stefano Confalone</i></small>
+      <ul class="footer-right">
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="terms-of-service.html">Terms of Service</a></li>
+      </ul>
     </div>
   </footer>
 
