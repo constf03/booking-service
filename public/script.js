@@ -104,7 +104,18 @@ async function displayBookingsTableData() {
   }
 
   for (let i = 0; i < bookingSlots.length; i++) {
-    bookingSlots[i].innerHTML = bookingSlots[i].id;
+    if (
+      bookingSlots[i].classList.contains("booking-slot-user") &&
+      bookingSlots[i].classList.contains("booking-slot-unavailable")
+    ) {
+      bookingSlots[i].innerHTML = "Your Booking";
+    } else if (bookingSlots[i].classList.contains("booking-slot-unavailable")) {
+      bookingSlots[i].innerHTML = "Unavailable";
+    } else if (bookingSlots[i].classList.contains("booking-slot-available")) {
+      bookingSlots[i].innerHTML = "Available";
+    } else {
+      bookingSlots[i].innerHTML = "Unknown";
+    }
   }
 }
 
@@ -322,7 +333,7 @@ function setBookingDetails(day, time) {
   bookingDetailsFormBtn.removeAttribute("disabled");
 
   bookingDetailsForm.addEventListener("submit", async () => {
-    //await createBooking(userId, slotSelected, getWeek(), day, time);
+    await createBooking(userId, slotSelected, getWeek(), day, time);
   });
 }
 

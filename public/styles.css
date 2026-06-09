@@ -111,6 +111,7 @@ body {
 
 .booking-slot {
   height: 64px;
+  font-size: 16px;
 }
 
 .booking-slot-available:hover {

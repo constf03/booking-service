@@ -3,12 +3,14 @@
 try {
     $mysqli = require __DIR__ . "/db.php";
 
-    // Data request vars
-    $req_user_id = $_POST["user_id"];
-    $req_slot_number = $_POST["slot_number"];
-    $req_week_number = $_POST["week_number"];
-    $req_date = $_POST["date"];
-    $req_time = $_POST["time"];
+    // Convert request data to JSON
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    $req_user_id        =   $data["user_id"];
+    $req_slot_number    =   $data["slot_number"];
+    $req_week_number    =   $data["week_number"];
+    $req_date           =   $data["date"];
+    $req_time           =   $data["time"];
 
     if (
         empty($req_user_id) &&
@@ -34,6 +36,7 @@ try {
         $req_user_id,
         $req_slot_number,
         $req_week_number,
+        $req_date,
         $req_time
     );
 

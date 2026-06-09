@@ -1,9 +1,9 @@
 <?php
 
-$host = "localhost";
-$db_name = "booking-service-db";
-$user = "root";
-$password = "";
+$host       =   "localhost";
+$db_name    =   "booking-service-db";
+$user       =   "root";
+$password   =   "";
 
 // Create MySQL db connection
 $mysqli = new mysqli($host, $user, $password, $db_name);
