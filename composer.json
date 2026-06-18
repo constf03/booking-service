@@ -1,0 +1,16 @@
+{
+    "name": "bookingservice/constf03",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Bookingservice\\Constf03\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "constf03",
+            "email": "stefano.confalone03@gmail.com"
+        }
+    ],
+    "require": {}
+}
