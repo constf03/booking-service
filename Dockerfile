@@ -19,7 +19,7 @@ RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 COPY ./src /var/www/html
 
 FROM base as development
-COPY ./tests /var/www/html/tests
+#COPY ./tests /var/www/html/tests
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY --from=dev-deps app/vendor/ /var/www/html/vendor
 
