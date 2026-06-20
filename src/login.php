@@ -3,7 +3,7 @@
 $is_valid = true;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $mysqli = require __DIR__ . "/../src/db.php";
+    $mysqli = require __DIR__ . "/db.php";
     $query = sprintf(
         "SELECT * FROM users
       WHERE email = '%s'",

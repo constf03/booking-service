@@ -148,9 +148,19 @@ a {
 }
 
 #wrapper-bookings-table {
-  background: var(--gradient-blue-green-transparent);
+  margin-top: 12px;
   overflow-x: auto;
   width: 100%;
+  border: 1px solid gray;
+  -webkit-backdrop-filter: blur(20px);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--blue-transparent)
+    rgba(255, 255, 255, 0.8),
+    var(--green-transparent),
+    transparent
+  );
 }
 
 @media screen and (min-width: 800px) {
@@ -189,7 +199,7 @@ a {
 .booking-slot-available:hover {
   cursor: pointer;
   transition: 200ms;
-  background-color: yellow;
+  background-color: rgba(255, 255, 0, 0.9);
 }
 
 .booking-slot:active {
@@ -198,11 +208,11 @@ a {
 }
 
 .booking-slot-available {
-  background-color: lightgreen;
+  background-color: rgba(144, 238, 144, 0.75);
 }
 
 .booking-slot-unavailable {
-  background-color: lightcoral;
+  background-color: rgba(240, 128, 128, 0.75);
 }
 
 .booking-slot-user {

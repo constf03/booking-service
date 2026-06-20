@@ -66,12 +66,12 @@ const bookingsTableInfoText = document.querySelector(
 
 async function getBookingsData() {
   try {
-    const response = await fetch("../src/get-bookings-data.php", {
+    const response = await fetch("/get-bookings-data.php", {
       method: "GET",
       "Content-Type": "application/json",
     });
 
-    if (response.status !== 200) {
+    if (response.status !== 200 || !response.ok) {
       bookingsTableInfoText.innerHTML = `
         <em style="color: red;">
           An error occurred while trying to display bookings data...
@@ -82,7 +82,6 @@ async function getBookingsData() {
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -133,7 +132,7 @@ async function createBooking(userId, slotNumber, weekNumber, date, time) {
       time: time,
     };
 
-    const response = await fetch("../src/create-booking.php", {
+    const response = await fetch("/create-booking.php", {
       method: "POST",
       "Content-Type": "application/json",
       body: data,
@@ -166,6 +165,7 @@ const bookingSlotIdsDB = {
 
 const bookingDetailsForm = document.querySelector("#booking-details-form");
 const ids = bookingSlotIdsDB;
+
 let slotTimeDate;
 let slotTimeDay;
 let slotTimeDayN;
@@ -368,12 +368,22 @@ if (currWeek) {
 const currWeekFirstDate = document.querySelector("#week-first-date");
 const currWeekLastDate = document.querySelector("#week-last-date");
 
-function displayCurrentWeekFirstAndLastDate() {
+function displayCurrentWeekFirstAndLastDate(direction) {
   const start = new Date();
   start.setDate(start.getDate() - start.getDay() + 1);
 
   const end = new Date(start);
   end.setDate(end.getDate() + 6);
+
+  if (direction) {
+    if (direction === "next") {
+      start.setDate(start.getDate() + 7);
+      end.setDate(end.getDate() + 7);
+    } else if (direction === "prev") {
+      start.setDate(start.getDate() - 7);
+      end.setDate(end.getDate() - 7);
+    }
+  }
 
   currWeekFirstDate.innerHTML = start.toLocaleDateString();
   currWeekLastDate.innerHTML = end.toLocaleDateString();
@@ -381,4 +391,29 @@ function displayCurrentWeekFirstAndLastDate() {
 
 if (currWeekFirstDate && currWeekLastDate) {
   displayCurrentWeekFirstAndLastDate();
+}
+
+const nextWeekBtn = document.querySelector("#next-week-btn");
+const prevWeekBtn = document.querySelector("#prev-week-btn");
+
+if (nextWeekBtn && prevWeekBtn) {
+  nextWeekBtn.addEventListener("click", () => {
+    changeWeek("next");
+  });
+  prevWeekBtn.addEventListener("click", () => {
+    changeWeek("prev");
+  });
+}
+
+function changeWeek(direction) {
+  let weekNumber = parseInt(currWeek.innerHTML.slice(5));
+  if (direction === "next") {
+    weekNumber += 1;
+  } else if (direction === "prev") {
+    weekNumber -= 1;
+  }
+  currWeek.innerHTML = `Week ${weekNumber.toString()}`;
+
+  displayCurrentWeekFirstAndLastDate(direction);
+  displayBookingsTableData();
 }

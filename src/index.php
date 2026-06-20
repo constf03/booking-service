@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION["user_id"])) {
-    $mysqli = require __DIR__ . "/../src/db.php";
+    $mysqli = require __DIR__ . "/db.php";
     $query = "SELECT * FROM users
               WHERE id = {$_SESSION["user_id"]}";
     $result = $mysqli->query($query);
@@ -19,14 +19,17 @@ if (isset($_SESSION["user_id"])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home - Booking Service</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.orange.min.css" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
-  <header id="header" class="header">
-    <div class="container">
-      <h3><strong>Booking Service</strong></h3>
+
+  <div class="page">
+    <div id="banner">
+    </div>
+
+    <header id="header">
+      <h2>Booking Service</h2>
 
       <?php if (isset($user)): ?>
       <nav id="header-nav">
@@ -38,12 +41,13 @@ if (isset($_SESSION["user_id"])) {
           </li>
 
           <li>
-            <a href="account.php" class="header-nav-item nav-user-name">
+            <a href="account.php" class="header-nav-item">
+              Profile
             </a>
           </li>
 
           <li>
-            <a href="../src/logout.php" class="header-nav-item">
+            <a href="logout.php" class="header-nav-item">
               Logout
             </a>
           </li>
@@ -61,7 +65,8 @@ if (isset($_SESSION["user_id"])) {
               </li>
 
               <li>
-                <a href="account.php" class="nav-user-name">
+                <a href="account.php">
+                  Profile
                 </a>
               </li>
 
@@ -75,27 +80,33 @@ if (isset($_SESSION["user_id"])) {
         </ul>
       </nav>
       <?php endif; ?>
-    </div>
-  </header>
+    </header>
 
-  <main id="main" class="container">
-    <section>
-      <?php if (isset($user)): ?>
-
-      <h1>Welcome back!</h1>
-
+    <main id="main">
       <section>
-        <h3>Bookings - <span id="week-number"></span></h3>
-        <p>View available bookings below and book yourself an available time.</p>
+        <?php if (isset($user)): ?>
 
-        <div>
-          <span id="week-first-date"></span>
-          <span>-</span>
-          <span id="week-last-date"></span>
-        </div>
+        <section>
+          <h1>Hello, <?= $user["name"] ?>!</h1>
 
-        <p id="bookings-table-info-text"></p>
-        <div id="wrapper-bookings-table">
+          <h3>Bookings - <span id="week-number"></span></h3>
+          <p>View available bookings below and book yourself an available time.</p>
+
+          <div>
+            <span id="week-first-date"></span>
+            <span>-</span>
+            <span id="week-last-date"></span>
+          </div>
+
+          <div>
+            <button id="prev-week-btn">Previous Week</button>
+            <button id="next-week-btn">Next Week</button>
+          </div>
+
+          <p id="bookings-table-info-text"></p>
+        </section>
+
+        <section id="wrapper-bookings-table">
           <table id="bookings-table">
             <thead>
               <tr>
@@ -254,9 +265,9 @@ if (isset($_SESSION["user_id"])) {
               </tr>
             </tbody>
           </table>
-        </div>
+        </section>
 
-        <div id="booking-details">
+        <section id="booking-details">
           <h3>Booking Details</h3>
           <form id="booking-details-form" method="post">
             <div>
@@ -269,58 +280,41 @@ if (isset($_SESSION["user_id"])) {
             </div>
             <button id="booking-details-button" disabled>Book Selected</button>
           </form>
-        </div>
+        </section>
+
+        <?php else: ?>
+
+        <h2>Login Required</h2>
+
+        <p>You must be logged in to use this service.</p>
+
+        <p>Please <a href="./login.php">login</a> or <a href="./register.html">register.</a></p>
+
+        <?php endif; ?>
       </section>
+    </main>
 
-      <?php else: ?>
+    <footer id="footer">
+      <div class="container">
+        <ul class="footer-left">
+          <li><strong>Booking Service - a Simple PHP Learning Project (2026)</strong></li>
+          <li><i>by Stefano Confalone</i></li>
+        </ul>
 
-      <h2>Login Required</h2>
-
-      <p>You must be logged in to use this service.</p>
-
-      <p>Please <a href="./login.php">login</a> or <a href="./register.html">register.</a></p>
-
-      <?php endif; ?>
-    </section>
-  </main>
-
-  <footer id="footer" class="page-footer">
-    <div class="container">
-      <ul class="footer-left">
-        <li><strong>Booking Service - a Simple PHP Learning Project (2026)</strong></li>
-        <li><i>by Stefano Confalone</i></li>
-      </ul>
-
-      <ul class="footer-right">
-        <li><a href="privacy-policy.php">Privacy Policy</a></li>
-        <li><a href="terms-of-service.php">Terms of Service</a></li>
-      </ul>
-    </div>
-  </footer>
+        <ul class="footer-right">
+          <li><a href="privacy-policy.php">Privacy Policy</a></li>
+          <li><a href="terms-of-service.php">Terms of Service</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
 
   <script>
     <?php if (isset($user)): ?>
 
     const
       userId = <?=  json_encode($_SESSION["user_id"]) ?> ;
-
     localStorage.setItem("userId", userId)
-
-    // truncate user name on nav to avoid overlapping
-    function truncateString(str, num) {
-      if (str.length <= num) {
-        return str;
-      } else {
-        const truncated = str.slice(0, num) + "...";
-        return truncated;
-      }
-    }
-
-    const userNameLinks = document.getElementsByClassName("nav-user-name");
-    for (let i = 0; i < userNameLinks.length; i++) {
-      const userName = <?= json_encode($user["name"]) ?> ;
-      userNameLinks[i].innerHTML = truncateString(userName, 8);
-    }
 
     <?php endif; ?>
   </script>

@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION["user_id"])) {
-    $mysqli = require __DIR__ . "/../src/db.php";
+    $mysqli = require __DIR__ . "/db.php";
     $query = "SELECT * FROM users
               WHERE id = {$_SESSION["user_id"]}";
     $result = $mysqli->query($query);
