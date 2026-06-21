@@ -31,15 +31,32 @@ if (isset($_SESSION["user_id"])) {
     <header id="header">
       <h2>Booking Service</h2>
 
-      <?php if (isset($user)): ?>
+      <div id="header-sidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="sidepanel-btn-close" onclick="closeNav()">&times;</a>
+        <h3>Booking Service</h3>
+        <a href="index.php">Home</a>
+        <?php if (isset($user)): ?>
+        <a href="account.php">Profile</a>
+        <a href="logout.php">Logout</a>
+        <?php else: ?>
+        <a href="login.php">Login</a>
+        <a href="register.html">Register</a>
+        <?php endif; ?>
+        <a href="#">Contact</a>
+      </div>
+
       <nav id="header-nav">
         <ul>
+          <li>
+            <button class="sidepanel-btn-open" onclick="openNav()">&#9776;</button>
+          </li>
           <li>
             <a href="index.php" class="header-nav-item">
               Home
             </a>
           </li>
 
+          <?php if (isset($user)): ?>
           <li>
             <a href="account.php" class="header-nav-item">
               Profile
@@ -52,34 +69,27 @@ if (isset($_SESSION["user_id"])) {
             </a>
           </li>
 
-          <details class="dropdown" id="header-nav-mobile-menu">
-            <summary>
-              Menu
-            </summary>
+          <?php else: ?>
+          <li>
+            <a href="login.php" class="header-nav-item">
+              Login
+            </a>
+          </li>
 
-            <ul dir="rtl">
-              <li>
-                <a href="index.php">
-                  Home
-                </a>
-              </li>
+          <li>
+            <a href="register.html" class="header-nav-item">
+              Register
+            </a>
+          </li>
+          <?php endif; ?>
 
-              <li>
-                <a href="account.php">
-                  Profile
-                </a>
-              </li>
-
-              <li>
-                <a href="#">
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </details>
+          <li>
+            <a href="#" class="header-nav-item">
+              Contact
+            </a>
+          </li>
         </ul>
       </nav>
-      <?php endif; ?>
     </header>
 
     <main id="main">
