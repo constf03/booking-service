@@ -2,9 +2,23 @@
   --pico-green: #398712;
   --green-transparent: rgba(0, 128, 0, 0.5);
   --blue-transparent: rgba(83, 83, 255, 0.5);
-  --gradient-gloss-green: linear-gradient(to bottom, var(--pico-green) 50%, darkgreen 50%, rgb(96, 191, 96) 100%);
-  --gradient-gloss-green-hover: linear-gradient(to bottom, var(--pico-green) 50%, darkgreen 50%, rgb(135, 254, 135) 100%); 
-  --gradient-blue-green-transparent: linear-gradient(to bottom, var(--blue-transparent), var(--green-transparent));
+  --gradient-gloss-green: linear-gradient(
+    to bottom,
+    var(--pico-green) 50%,
+    darkgreen 50%,
+    rgb(96, 191, 96) 100%
+  );
+  --gradient-gloss-green-hover: linear-gradient(
+    to bottom,
+    var(--pico-green) 50%,
+    darkgreen 50%,
+    rgb(135, 254, 135) 100%
+  );
+  --gradient-blue-green-transparent: linear-gradient(
+    to bottom,
+    var(--blue-transparent),
+    var(--green-transparent)
+  );
 }
 
 body {
@@ -19,15 +33,12 @@ body {
   justify-content: center;
 }
 
-a {
-  color: white;
-}
-
 * {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
   font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 
 .page {
@@ -39,9 +50,10 @@ a {
   background-size: cover;
   background-position: center;
   height: 100px;
+  display: none;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 760px) {
   .page {
     margin-top: 32px;
     margin-bottom: 32px;
@@ -51,6 +63,7 @@ a {
   #banner {
     border-top-left-radius: 128px;
     border-top-right-radius: 128px;
+    display: block;
   }
 }
 
@@ -74,11 +87,11 @@ a {
   align-items: center;
   background: var(--gradient-gloss-green);
   height: 44px;
-  border-top: 1px solid rgb(108, 215, 108);
-  border-left: 1px solid rgb(108, 215, 108);
-  border-right: 1px solid rgb(108, 215, 108);
   border-bottom: 1px solid var(--pico-green);
   padding-left: 6px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 #header .container {
@@ -108,6 +121,74 @@ a {
   height: 100%;
 }
 
+/* Sidepanel menu */
+.sidepanel {
+  height: 100%;
+  visibility: hidden;
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--green-transparent),
+    transparent 90%,
+    rgba(255, 255, 255, 0.3)
+  );
+  backdrop-filter: blur(4px);
+  border: 1px solid gray;
+  box-shadow: 2px 0px 6px 0px black;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+  border-top-right-radius: 32px;
+  border-bottom-right-radius: 32px;
+}
+
+/* Sidepanel links */
+.sidepanel a {
+  padding: 4px 4px 4px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidepanel a:hover {
+  color: #767676;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel-btn-close {
+  position: absolute;
+  top: 12px;
+  right: 24px;
+}
+
+/* Style the button that is used to open the sidepanel */
+.sidepanel-btn-open {
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  border-left: 1px solid green;
+  width: 64px;
+  height: 100%;
+}
+
+.sidepanel-btn-open:hover,
+.sidepanel-btn-open:active {
+  background: var(--gradient-gloss-green-hover);
+  transition: 100ms;
+}
+
 @media screen and (min-width: 760px) {
   .header-nav-item {
     display: flex;
@@ -131,6 +212,14 @@ a {
 
   #header {
     padding-left: 14px;
+    border-top: 1px solid rgb(108, 215, 108);
+    border-left: 1px solid rgb(108, 215, 108);
+    border-right: 1px solid rgb(108, 215, 108);
+  }
+
+  .sidepanel,
+  .sidepanel-btn-open {
+    display: none;
   }
 }
 
@@ -156,15 +245,13 @@ a {
   background: linear-gradient(
     90deg,
     transparent,
-    var(--blue-transparent)
-    rgba(255, 255, 255, 0.8),
+    var(--blue-transparent) rgba(255, 255, 255, 0.8),
     var(--green-transparent),
     transparent
   );
 }
 
 @media screen and (min-width: 800px) {
-
   #footer .container {
     flex-direction: row;
   }
