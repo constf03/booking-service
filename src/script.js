@@ -1,3 +1,17 @@
+const sidePanel = document.querySelector("#header-sidepanel");
+
+/* Set the width of the sidebar to 250px (show it) */
+function openNav() {
+  sidePanel.style.width = "250px";
+  sidePanel.style.visibility = "visible";
+}
+
+/* Set the width of the sidebar to 0 (hide it) */
+function closeNav() {
+  sidePanel.style.width = "0";
+  sidePanel.style.visibility = "hidden";
+}
+
 // Form validation
 const registerForm = document.querySelector("#register-form");
 
