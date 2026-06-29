@@ -12,23 +12,39 @@ Requirements:
 - Composer (https://getcomposer.org/download/)
 - Docker Desktop (https://www.docker.com/products/docker-desktop/)
 
-Cloning the repo:
+1. Clone the repo:
 
 ```
 git clone https://github.com/constf03/booking-service
 ```
 
-Installing dependencies:
+2. Install dependencies:
 
 ```
 php composer.phar update
 ```
 
-Creating Docker containers:
+3. Setup DB secret
+
+Windows:
+
+```
+powershell -executionpolicy bypass -File .\setup-db.ps1
+```
+
+Linux:
+
+```
+.\setup-db.sh
+```
+
+3. Create Docker containers:
 
 ```
 docker compose up --build
 ```
+
+Website should be running on localhost:9000
 
 ## Technology Stack
 
