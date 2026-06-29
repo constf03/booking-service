@@ -66,7 +66,7 @@ if (!$stmt->prepare($query)) {
 $stmt->bind_param("sss", $req_name, $req_email, $password_hash);
 
 if ($stmt->execute()) {
-    header("Location: /register-success.html");
+    header("Location: register-success.html");
     exit;
 } else {
     die("SQL Error: $mysqli->error $mysqli->errno");
