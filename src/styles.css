@@ -41,6 +41,16 @@ body {
   color: white;
 }
 
+p,
+a,
+span,
+button,
+li,
+td,
+tr {
+  font-size: 14px;
+}
+
 .page {
   width: 100%;
 }
@@ -75,8 +85,10 @@ body {
 
 #main {
   min-height: 900px;
-  background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
   padding: 16px;
   color: white;
 }
@@ -150,7 +162,6 @@ body {
 .sidepanel a {
   padding: 4px 4px 4px 16px;
   text-decoration: none;
-  font-size: 18px;
   color: white;
   display: block;
   transition: 0.3s;
@@ -171,7 +182,6 @@ body {
 /* Style the button that is used to open the sidepanel */
 .sidepanel-btn-open {
   color: white;
-  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -241,14 +251,8 @@ body {
   overflow-x: auto;
   width: 100%;
   border: 1px solid gray;
-  -webkit-backdrop-filter: blur(20px);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--blue-transparent) rgba(255, 255, 255, 0.8),
-    var(--green-transparent),
-    transparent
-  );
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 4px 0px black;
 }
 
 @media screen and (min-width: 800px) {
@@ -304,4 +308,41 @@ body {
 
 .booking-slot-user {
   background-color: lightskyblue;
+}
+
+.content-box {
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid gray;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 4px 0px black;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media screen and (min-width: 600px) {
+  .content-box {
+    width: 50%;
+  }
+}
+
+.btn-primary {
+  background: var(--gradient-gloss-green);
+  padding: 6px;
+  border-top: 1px solid green;
+  border-bottom: 1px solid lightgreen;
+  border-right: 1px solid green;
+  border-left: 1px solid green;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px 0px black;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+  background: var(--gradient-gloss-green-hover);
+  text-decoration: underline;
+  transform: scale(105%);
+  cursor: pointer;
 }
