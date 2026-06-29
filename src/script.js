@@ -78,9 +78,9 @@ const bookingsTableInfoText = document.querySelector(
   "#bookings-table-info-text",
 );
 
-async function getBookingsData() {
+async function getBookings() {
   try {
-    const response = await fetch("/get-bookings-data.php", {
+    const response = await fetch("/get-bookings.php", {
       method: "GET",
       "Content-Type": "application/json",
     });
@@ -108,7 +108,7 @@ let amtOfSlots;
 async function displayBookingsTableData() {
   const userId = parseInt(localStorage.getItem("userId"));
   const weekNumber = getWeek();
-  const payload = await getBookingsData();
+  const payload = await getBookings();
 
   for (let i = 0; i < payload.length; i++) {
     if (payload[i].user_id == userId && payload[i].week_number == weekNumber) {
