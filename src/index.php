@@ -100,7 +100,8 @@ if (isset($_SESSION["user_id"])) {
         </div>
 
         <div class="content-box">
-          <h3>Bookings - <span id="week-number"></span></h3>
+          <span>Bookings - <span id="week-number"></span>
+          </span>
           <p>View available bookings below and book yourself an available time.</p>
 
           <div>
